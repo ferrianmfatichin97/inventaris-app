@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-6">
                         <div class="label">Serial Number</div>
-                        <div class="value">{{ $data->inv_seri }}</div>
+                        <div class="value"><p>{{ $data->inv_seri }}</p></div>
                     </div>
                     <div class="col-6">
                         <div class="label">Department</div>
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="label">Condition</div>
+                        <div class="label">Lokasi Barang</div>
                         <div class="value">-</div>
                     </div>
                     <div class="col-6">
