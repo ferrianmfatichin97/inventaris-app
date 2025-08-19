@@ -197,6 +197,11 @@ class InventarisResource extends Resource
             ->with(['kendaraan', 'tanahGedung']);
     }
 
+    public function canAccessFilament(): bool
+    {
+        return true;
+    }
+
     public static function getPages(): array
     {
         return [

@@ -52,6 +52,9 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->resources([
+                \App\Filament\Resources\InventarisResource::class,
+            ])
             ->authMiddleware([
                 Authenticate::class,
             ]);
