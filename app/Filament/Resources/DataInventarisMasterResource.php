@@ -13,18 +13,23 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\HtmlString;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\SelectFilter;
+use Carbon\Carbon;
 
 class DataInventarisMasterResource extends Resource
 {
     protected static ?string $model = DataInventarisMaster::class;
 
     protected static ?string $navigationGroup = 'Management Inventaris';
-    protected static ?string $navigationLabel = 'Data Inventaris Server';
+    protected static ?string $navigationLabel = 'Data Inventaris Master';
     protected static ?string $slug = 'data-inventaris-server';
 
     public static function form(Form $form): Form
     {
-        return $form
+        return $form    
             ->schema([
                 //
             ]);
@@ -50,7 +55,44 @@ class DataInventarisMasterResource extends Resource
             ->defaultSort('inv_peroleh_tanggal', 'desc')
             ->paginated([25, 50, 100])
             ->defaultPaginationPageOption(25)
-            ->filters([])
+            ->filters([
+                Filter::make('Tanggal Perolehan')
+                    ->form([
+                        DatePicker::make('from')->label('Dari Tanggal'),
+                        DatePicker::make('until')->label('Sampai Tanggal'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['from'], fn($q, $date) => $q->whereDate('inv_peroleh_tanggal', '>=', $date))
+                            ->when($data['until'], fn($q, $date) => $q->whereDate('inv_peroleh_tanggal', '<=', $date));
+                    }),
+                SelectFilter::make('periode')
+                    ->label('Periode Perolehan')
+                    ->options(function () {
+                        return DataInventarisMaster::query()
+                            ->selectRaw('YEAR(inv_peroleh_tanggal) as year, MONTH(inv_peroleh_tanggal) as month')
+                            ->distinct()
+                            ->orderByDesc('year')
+                            ->orderByDesc('month')
+                            ->get()
+                            ->mapWithKeys(function ($row) {
+                                $label = Carbon::createFromDate($row->year, $row->month, 1)
+                                    ->translatedFormat('F Y');
+                                $value = $row->year . '-' . str_pad($row->month, 2, '0', STR_PAD_LEFT);
+                                return [$value => $label];
+                            })
+                            ->toArray();
+                    })
+                    ->placeholder('Pilih Periode')
+                    ->query(function ($query, array $data) {
+                        return $query->when($data['value'], function ($q, $value) {
+                            [$year, $month] = explode('-', $value);
+                            $q->whereYear('inv_peroleh_tanggal', $year)
+                                ->whereMonth('inv_peroleh_tanggal', $month);
+                        });
+                    }),
+            ])
+            ->filtersLayout(FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\Action::make('lihat')
                     ->label('Lihat')

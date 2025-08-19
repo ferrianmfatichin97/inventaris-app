@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-6">
                         <div class="label">Lokasi Barang</div>
-                        <div class="value">-</div>
+                        <div class="value">{{ $inventarisLocal->ruangan_id ?? '-' }}</div>
                     </div>
                     <div class="col-6">
                         <div class="label">Tanggal Perolehan</div>

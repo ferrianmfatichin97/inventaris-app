@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class InventarisTanahGedung extends Model
 {
      use HasFactory;
+     protected $table = 'inventaris_tanah_gedung';
 
     protected $fillable = [
         'inventaris_id',
