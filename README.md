@@ -1,8 +1,4 @@
-<p align="center">
-  <a href="https://laravel.com" target="_blank">
-    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
-  </a>
-</p>
+<p align="center"><a href="https://bankdptaspen.co.id/" target="_blank"><img src="https://bankdptaspen.co.id/wp-content/uploads/2024/01/Logo-Bank-DP-Taspen-Version-New.png" width="400" alt="Bank BPR DP Taspen Logo"></a></p>
 
 # 📦 Sistem Inventaris
 
